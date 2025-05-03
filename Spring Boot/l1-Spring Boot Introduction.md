@@ -1,42 +1,8 @@
 
 # 📚 Spring Boot Introduction – Detailed Notes
 
-## 🌟 Course Overview
-
-- **No prior knowledge** of Spring or Spring Boot required.
-    
-- Starting from **very basics** and gradually advancing.
-    
-- Practical integrations:
-    
-    - MongoDB
-        
-    - MySQL
-        
-    - Redis
-        
-    - Elasticsearch
-        
-    - External APIs
-        
-    - Schedulers
-        
-- **Other topics**:
-    
-    - Properties files & externalization (Config Server)
-        
-    - Moduling in Spring Boot Projects
-        
-    - JAR and WAR packaging
-        
-    - Unit Testing with JUnit
-        
-- **Main aim**:  
-    Remove fear of Spring Boot through detailed understanding.
-    
 
 ---
-
 ## 📖 What is Spring Boot?
 
 - Spring Boot is a **framework** for **building Java applications**.
