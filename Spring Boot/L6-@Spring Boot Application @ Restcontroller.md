@@ -1,5 +1,5 @@
 
-## 🔹 **Spring Boot Application Overview**
+
 
 
 
@@ -325,3 +325,78 @@ Dog is having fun!
 | Requirements  | Bean must be in component-scanned package and annotated (e.g., `@Component`) |
 | Benefit       | Clean code, loose coupling, testability, better design                       |
 |               |                                                                              |
+
+
+# 🧾 What is `@RestController` in Simple Words?
+
+In **Spring Boot**, `@RestController` is a **special annotation** that does two important things:
+
+---
+
+### ✅ 1. It Tells Spring: "This Class is a Controller"
+
+Just like a teacher in a classroom, this class will **receive and handle web requests** like:
+
+- GET `/users`
+    
+- POST `/journal`
+    
+- DELETE `/notes/5`
+    
+
+---
+
+### ✅ 2. It Automatically Returns Data as JSON
+
+Normally, if you return a `String` or `Object`, Spring might try to find a view (like an HTML file).  
+But with `@RestController`, Spring automatically says:
+
+> "Oh! You want to return **data**, not a webpage. I’ll convert it to **JSON** for you."
+
+---
+
+### 🔁 It’s Like Combining Two Annotations:
+
+```java
+// Equivalent to:
+@Controller
+@ResponseBody
+```
+
+So instead of writing both, you just use:
+
+```java
+@RestController
+```
+
+---
+
+### 🧠 Simple Example:
+
+```java
+@RestController
+public class HelloController {
+
+    @GetMapping("/hello")
+    public String sayHello() {
+        return "Hello, Spring Boot!";
+    }
+}
+```
+
+When you go to: `http://localhost:8080/hello`  
+✅ You will see: `Hello, Spring Boot!` — as a raw response, **not an HTML page**.
+
+---
+
+### 🔚 In Summary:
+
+|Feature|What it does|
+|---|---|
+|`@RestController`|Handles web requests & returns **data** (usually JSON)|
+|Used for|Building **RESTful APIs** in Spring Boot|
+|Replaces|`@Controller + @ResponseBody`|
+
+---
+
+Would you like a working Spring Boot project with `@RestController` and testable endpoints?

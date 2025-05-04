@@ -221,7 +221,77 @@ Response: Hello
     
 - Created and tested a simple REST API using Spring Web.
     
+### ✅ JAR vs WAR in Java & Spring Boot
+
+Both **JAR** and **WAR** are packaging formats in Java used to bundle compiled code, resources, and configuration files for deployment — but they serve **different purposes**.
 
 ---
 
-Would you like a downloadable `.zip` of the example project?
+### 🔹 JAR (Java ARchive)
+
+|Feature|Details|
+|---|---|
+|📦 **What it is**|A package of Java classes, resources, and metadata in a compressed format.|
+|📌 **Used for**|Running standalone Java or Spring Boot applications.|
+|🚀 **Execution**|Can be run with `java -jar file.jar`.|
+|✅ **Spring Boot**|By default, Spring Boot apps are packaged as **JARs**.|
+|🌱 **Self-contained**|Contains embedded server (e.g., Tomcat), so you don’t need to install a server separately.|
+
+#### 📁 JAR Contents (Spring Boot Example)
+
+```
+myapp.jar
+├── BOOT-INF/
+│   ├── classes/       ← compiled .class files
+│   ├── lib/           ← all dependencies
+├── META-INF/
+└── org/
+```
+
+---
+
+### 🔸 WAR (Web Application Archive)
+
+|Feature|Details|
+|---|---|
+|📦 **What it is**|A package specifically for **web applications**.|
+|📌 **Used for**|Deploying web apps into external servlet containers like **Apache Tomcat**, **JBoss**, **WebLogic**.|
+|⚙️ **Deployment**|You place the `.war` file in the `webapps/` folder of the web server.|
+|⚠️ **Spring Boot**|Needs to be adjusted to support WAR (not default).|
+
+#### 📁 WAR Contents (Servlet App Example)
+
+```
+myapp.war
+├── WEB-INF/
+│   ├── classes/
+│   ├── lib/
+│   └── web.xml
+```
+
+---
+
+### 🔄 JAR vs WAR Summary
+
+|Feature|JAR|WAR|
+|---|---|---|
+|Format|Java Archive|Web Archive|
+|App Type|Standalone apps|Web apps (Servlet/JSP)|
+|Embedded Server|Yes (e.g., Tomcat)|No (needs external server)|
+|Spring Boot Default|✅ Yes|❌ No, needs extra config|
+|Deployment Style|Run with `java -jar`|Deploy to servlet container|
+
+---
+
+### 📌 In Spring Boot:
+
+- Use **JAR** when:
+    
+    - You want to create a **standalone** app.
+        
+    - You want to deploy to a **cloud** platform like AWS, Azure, or Heroku.
+        
+- Use **WAR** when:
+    
+    - You need to deploy to an **existing servlet container** like Tomcat/Jetty.
+        
