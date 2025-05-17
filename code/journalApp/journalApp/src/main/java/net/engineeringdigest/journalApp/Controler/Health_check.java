@@ -12,3 +12,4 @@ public class Health_check {
         return ResponseEntity.ok("server running");
     }
 }
+
