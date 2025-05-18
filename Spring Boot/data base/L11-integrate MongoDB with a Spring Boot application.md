@@ -639,7 +639,7 @@ public class JournalEntry {
     private ObjectId id;
     private String title;
     private String content;
-    private LocalDateTime createdDate;
+    
 
     public ObjectId getId() {
         return id;

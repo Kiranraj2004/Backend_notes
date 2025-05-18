@@ -65,5 +65,4 @@ JournalEntry entry = journalEntryRepository.findById(5)
 |`Optional<JournalEntry>`|Might exist, explicitly handled|✅ Safer|
 
 ---
-
-Would you like to see how to create a custom exception for better error messages when an entry is not found?
+Jackson tries to create an `ObjectId` from the number `1`, which is **not valid**, because `ObjectId` needs a hexadecimal string format like `"507f1f77bcf86cd799439011"`.

@@ -215,7 +215,3 @@ public String addUser(@RequestBody User user) {
     
 - Use annotations like `@Getter`, `@Setter`, or simply `@Data` for full functionality.
     
-
----
-
-Would you like a working Spring Boot project example using Lombok (e.g., User CRUD)?

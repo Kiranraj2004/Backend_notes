@@ -1,16 +1,19 @@
 package net.engineeringdigest.journalApp.service;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import net.engineeringdigest.journalApp.Entity.JournalEntry;
 import net.engineeringdigest.journalApp.repository.JournalEntryRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.print.attribute.standard.JobHoldUntil;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@JsonSerialize
 @Service
 @Component
 public class JournalEntryService {
@@ -18,21 +21,28 @@ public class JournalEntryService {
     private JournalEntryRepository journalEntryRepository;
 
     public JournalEntry createEntry(JournalEntry entry) {
+        entry.setCreatedDate(LocalDateTime.now());
         return journalEntryRepository.save(entry);
     }
-    public JournalEntry getById(int id) {
-       return journalEntryRepository.findById(id).get();
+
+    public Optional<JournalEntry> getById(ObjectId id) {
+
+        return journalEntryRepository.findById(id);
     }
 
     public List<JournalEntry> getAll(){
+
         return  journalEntryRepository.findAll();
     }
 
-    public void deleteById(int id){
+    public void deleteById(ObjectId id){
+
         journalEntryRepository.deleteById(id);
     }
-    public JournalEntry  update(int id,JournalEntry newEntry){
-        JournalEntry oldentry=getById(id);
+
+    public JournalEntry  update(ObjectId id,JournalEntry newEntry){
+        JournalEntry oldentry=getById(id).get();
+
         if(oldentry!=null){
             if(newEntry.getTitle()!=null&&!newEntry.getTitle().isEmpty()){
                 oldentry.setTitle(newEntry.getTitle());
