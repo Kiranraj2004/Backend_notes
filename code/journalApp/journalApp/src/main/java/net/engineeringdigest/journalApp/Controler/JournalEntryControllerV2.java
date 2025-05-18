@@ -1,9 +1,13 @@
 package net.engineeringdigest.journalApp.Controler;
 
 import net.engineeringdigest.journalApp.Entity.JournalEntry;
+import net.engineeringdigest.journalApp.Entity.UserEntry;
 import net.engineeringdigest.journalApp.service.JournalEntryService;
+import net.engineeringdigest.journalApp.service.UserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,39 +19,57 @@ import java.util.Optional;
 public class JournalEntryControllerV2 {
     @Autowired
     private JournalEntryService journalEntryService;
-
-    // GET all entries
-
-
-//    Post Method
-    @PostMapping()
-    public boolean createEntry(@RequestBody JournalEntry obj){
-        journalEntryService.createEntry(obj);
-        return true;
-    }
-
-    @GetMapping("/{id}")
-    public Optional<JournalEntry> getById(@PathVariable("id") ObjectId id ){
-        return journalEntryService.getById(id);
-    }
+    @Autowired
+    private UserService userService;
 
 
-    @GetMapping()
-    public List<JournalEntry>  getall(){
-
+    // GET all entries  journal entry
+    @GetMapping
+    public List<JournalEntry>getAllJournal(){
         return journalEntryService.getAll();
     }
-//
-    @PutMapping("/{id}")
-    public JournalEntry updateOne(@PathVariable ObjectId id, @RequestBody JournalEntry obj) {
-        return journalEntryService.update(id,obj);
 
+    // GET all entries of particular user entry
+    @GetMapping("/{userName}")
+    public ResponseEntity<?> getAllJournalEntriesOfUser(@PathVariable String userName) {
+        UserEntry user = userService.findByUserName(userName);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+        return ResponseEntity.ok(user.getJournalEntries());
     }
-//
-    @DeleteMapping("/{id}")
-    public boolean deleteone(@PathVariable ObjectId id){
-       journalEntryService.deleteById(id);
-        return true;
+
+
+
+    //    Post Method
+    @PostMapping("/{userName}")
+    public ResponseEntity<?> createEntry(@PathVariable String userName,@RequestBody JournalEntry obj){
+        return journalEntryService.createEntry(obj,userName);
+    }
+
+    @GetMapping("id/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") ObjectId id ){
+        Optional<JournalEntry> byId = journalEntryService.getById(id);
+        if(byId.isPresent()){
+            return ResponseEntity.ok(byId.get());
+        }
+        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("journal not found");
+    }
+
+
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateOne(@PathVariable ObjectId id, @RequestBody JournalEntry obj) {
+        return journalEntryService.update(id,obj);
+    }
+
+
+//    deleting the particular journal of user
+    @DeleteMapping("/{userName}/{id}")
+    public ResponseEntity<?> deleteone(@PathVariable ObjectId id,@PathVariable String userName){
+
+        return journalEntryService.deleteById(id,userName);
     }
 
 

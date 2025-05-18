@@ -893,3 +893,190 @@ Let me know when you're ready to implement:
     
 
 I'll help you with clean code and explanations.
+
+
+
+
+### 🎯 **Goals of this Section:**
+
+- Delete a specific journal entry by ID.
+    
+- Remove the reference of that journal entry from the user document.
+    
+- Understand why we must do this manually in MongoDB.
+    
+- Handle update operations for journal entries.
+    
+- Identify potential data inconsistency problems and plan for transaction-based solutions.
+    
+
+---
+
+### 🧩 **Initial Delete Setup**
+
+When deleting a journal entry, we must also remove its reference from the associated user’s list of journal entries.
+
+```java
+@DeleteMapping("/journal/{id}/{username}")
+public ResponseEntity<Void> deleteJournalEntry(@PathVariable String id, @PathVariable String username) {
+    journalEntryRepository.deleteById(new ObjectId(id));
+
+    User user = userRepository.findByUsername(username).orElseThrow();
+    user.getJournalEntries().removeIf(entry -> entry.getId().toString().equals(id));
+    userRepository.save(user);
+
+    return ResponseEntity.noContent().build();
+}
+```
+
+### 📝 **Key Points:**
+
+- **MongoDB** does not **automatically handle cascading deletes** like relational DBs (via foreign keys).
+    
+- You must **manually update the user** document and remove the deleted journal entry’s reference.
+    
+- If this is not done, it causes **data inconsistency**: the journal entry is gone, but a dead reference remains in the user document.
+    
+
+---
+
+### 🔁 **Demonstration & Testing:**
+
+- **Created two entries** from Postman.
+    
+- Verified they exist in MongoDB using the shell.
+    
+- **Deleted one entry** using `DELETE /journal/{id}/{username}`.
+    
+- Verified it was removed both:
+    
+    - from the `journalEntries` collection
+        
+    - and from the associated `User` document (if the `removeIf` was not commented out).
+        
+
+### ❗ **If `removeIf` is commented out:**
+
+- Entry will still be removed from `journalEntries`.
+    
+- But its **reference will remain** in the `User` document.
+    
+- On next save, Spring Data MongoDB **may clean it up**, but **this is unreliable**.
+    
+
+---
+
+### ⚠️ **Illustrating Inconsistency:**
+
+When the entry is deleted but the user is not updated:
+
+```java
+user.getJournalEntries().removeIf(entry -> entry.getId().toString().equals(id));
+userRepository.save(user);
+```
+
+If this block is **missing**, then on the next post/save, Spring might ignore or overwrite the stale reference, but this behavior is **not safe**.
+
+---
+
+### 🛠️ **Fix: Immediate Consistency**
+
+Ensure the `user` is updated **at the same time** the journal entry is deleted.
+
+---
+
+### 🧪 **Journal Entry Update Endpoint**
+
+Now, let’s handle updating a journal entry.
+
+```java
+@PutMapping("/journal/{id}/{username}")
+public ResponseEntity<JournalEntry> updateJournalEntry(
+    @PathVariable String id,
+    @PathVariable String username,
+    @RequestBody JournalEntry updatedEntry
+) {
+    JournalEntry existing = journalEntryRepository.findById(new ObjectId(id))
+        .orElseThrow(() -> new RuntimeException("Entry not found"));
+
+    existing.setTitle(updatedEntry.getTitle());
+    existing.setContent(updatedEntry.getContent());
+    // any other fields to be updated...
+
+    JournalEntry saved = journalEntryRepository.save(existing);
+
+    return ResponseEntity.ok(saved);
+}
+```
+
+#### ✅ Key Notes:
+
+- No need to modify the `User` document because the **reference remains unchanged**.
+    
+- A method without a username parameter was added for generic saves.
+    
+
+---
+
+### 🧪 **Testing:**
+
+- Sent a `PUT` request with new title/content using Postman.
+    
+- Validated that the entry was updated successfully in MongoDB.
+    
+
+---
+
+### ⚠️ **Final Problem Identified: Partial Save Issue**
+
+- If we **save the journal entry** successfully...
+    
+- But **fail before updating the user document** (e.g., exception occurs)...
+    
+- We get **inconsistent state**:
+    
+    - Journal entry exists.
+        
+    - User doesn't reference it.
+        
+
+#### 🧠 Solution (Coming in next video):
+
+Use **MongoDB Transactions** to ensure **atomicity** — either both the journal entry and user update succeed or both fail.
+
+---
+
+### 🔚 **Summary:**
+
+|Operation|Journal Collection|User Document|Status|
+|---|---|---|---|
+|Create|✅ Entry Saved|✅ Reference Added|✅|
+|Delete|✅ Entry Deleted|✅ Reference Removed|✅|
+|Update|✅ Entry Updated|❌ No User Change Needed|✅|
+|Partial Save Risk|✅ Saved|❌ Not Updated|❌ (needs transaction)|
+
+---
+
+### 🧪 Simple Save Method (Without Username)
+
+```java
+public JournalEntry saveEntry(JournalEntry entry) {
+    return journalEntryRepository.save(entry);
+}
+```
+
+---
+
+### 🧪 Save with Username (For Linking to User)
+
+```java
+public JournalEntry saveEntry(JournalEntry entry, String username) {
+    JournalEntry saved = journalEntryRepository.save(entry);
+
+    User user = userRepository.findByUsername(username).orElseThrow();
+    user.getJournalEntries().add(saved);
+    userRepository.save(user);
+
+    return saved;
+}
+```

@@ -1,5 +1,6 @@
 package net.engineeringdigest.journalApp.Controler;
 
+
 import net.engineeringdigest.journalApp.Entity.UserEntry;
 import net.engineeringdigest.journalApp.service.UserService;
 import org.bson.types.ObjectId;
@@ -34,11 +35,13 @@ public class UserController {
         return userService.createEntry(userEntry);
     }
 
-    @PutMapping
-    public ResponseEntity<?> upadate(@RequestBody UserEntry userEntry){
-        UserEntry userEntryInDb=userService.findByUserName(userEntry.getUsername());
+    @PutMapping("/{userName}")
+    public ResponseEntity<?> upadate(@PathVariable String userName, @RequestBody UserEntry userEntry){
+        UserEntry userEntryInDb=userService.findByUserName(userName);
         if(userEntryInDb!=null){
-            userEntryInDb.setUsername(userEntry.getUsername());
+            if(!userEntry.getUsername().isEmpty()) {
+                userEntryInDb.setUsername(userEntry.getUsername());
+            }
             userEntryInDb.setPassword(userEntry.getPassword());
             userService.createEntry(userEntryInDb);
             return ResponseEntity.ok(userEntryInDb);
@@ -51,5 +54,10 @@ public class UserController {
     public Optional<UserEntry> getById(@PathVariable ObjectId id){
         return userService.getById(id);
 
+    }
+
+    @DeleteMapping("/{userName}")
+    public  ResponseEntity<?> deleteUserByName(@PathVariable String userName){
+        return userService.deleteById(userName);
     }
 }
