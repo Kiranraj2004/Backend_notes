@@ -255,3 +255,143 @@ This process is automatically handled by the **Spring Boot Maven Plugin**, usual
 |---|---|
 |**Fat JAR**|A JAR file with your app + all dependencies + embedded server|
 |**Repackaging**|The Maven process that takes your app JAR and wraps it with dependencies|
+### 📦 What is a JAR in Java?
+
+**JAR** stands for **Java ARchive**.  
+It is a **compressed file format** (like `.zip`) used to bundle:
+
+- **.class** files (compiled Java code)
+    
+- **resources** (images, text files, properties)
+    
+- **metadata** (like `MANIFEST.MF`)
+    
+
+Into a single file with a `.jar` extension.
+
+---
+
+### ✅ Why Use a JAR?
+
+|Purpose|Benefit|
+|---|---|
+|Package many class files|Easy to distribute Java applications|
+|Include libraries/resources|All-in-one packaging|
+|Share reusable libraries|Others can use your code as a dependency|
+|Create executable programs|Run with `java -jar`|
+
+---
+
+### 🔨 How to Create a JAR File
+
+```bash
+jar cf MyApp.jar *.class
+```
+
+- `c` = create
+    
+- `f` = specify file name
+    
+- `*.class` = files to include
+    
+
+You can also include packages or resources like this:
+
+```bash
+jar cf MyApp.jar com/myapp/*.class config.properties
+```
+
+---
+
+### 🏃 How to Run an Executable JAR
+
+If your JAR includes a `Main-Class` in the manifest:
+
+```bash
+java -jar MyApp.jar
+```
+
+---
+
+### 📝 Manifest File (META-INF/MANIFEST.MF)
+
+A JAR can include a special file called `MANIFEST.MF` that contains metadata, like:
+
+```
+Main-Class: com.myapp.Main
+```
+
+You can specify this when creating a JAR:
+
+```bash
+jar cfm MyApp.jar manifest.txt *.class
+```
+
+Where `manifest.txt` contains:
+
+```
+Main-Class: com.myapp.Main
+```
+
+---
+
+### 📁 Example JAR Structure
+
+```
+MyApp.jar
+├── META-INF/
+│   └── MANIFEST.MF
+├── com/
+│   └── myapp/
+│       ├── Main.class
+│       └── Utils.class
+└── config.properties
+```
+
+---
+
+### 🧪 Example: Hello World JAR
+
+#### Hello.java
+
+```java
+public class Hello {
+    public static void main(String[] args) {
+        System.out.println("Hello from JAR!");
+    }
+}
+```
+
+#### Compile:
+
+```bash
+javac Hello.java
+```
+
+#### Create Manifest:
+
+`manifest.txt`:
+
+```
+Main-Class: Hello
+```
+
+#### Create JAR:
+
+```bash
+jar cfm Hello.jar manifest.txt Hello.class
+```
+
+#### Run:
+
+```bash
+java -jar Hello.jar
+```
+
+🖨️ Output:
+
+```
+Hello from JAR!
+```
+
+---

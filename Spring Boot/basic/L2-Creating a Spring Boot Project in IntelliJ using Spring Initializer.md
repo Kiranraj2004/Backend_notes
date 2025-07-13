@@ -273,13 +273,13 @@ myapp.war
 
 ### 🔄 JAR vs WAR Summary
 
-|Feature|JAR|WAR|
-|---|---|---|
-|Format|Java Archive|Web Archive|
-|App Type|Standalone apps|Web apps (Servlet/JSP)|
-|Embedded Server|Yes (e.g., Tomcat)|No (needs external server)|
-|Spring Boot Default|✅ Yes|❌ No, needs extra config|
-|Deployment Style|Run with `java -jar`|Deploy to servlet container|
+| Feature             | JAR                  | WAR                         |
+| ------------------- | -------------------- | --------------------------- |
+| Format              | Java Archive         | Web Archive                 |
+| App Type            | Standalone apps      | Web apps (Servlet/JSP)      |
+| Embedded Server     | Yes (e.g., Tomcat)   | No (needs external server)  |
+| Spring Boot Default | ✅ Yes                | ❌ No, needs extra config    |
+| Deployment Style    | Run with `java -jar` | Deploy to servlet container |
 
 ---
 

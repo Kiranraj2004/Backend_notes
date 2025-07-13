@@ -74,27 +74,21 @@ Run MongoDB on your system using its shell (`mongo` or `mongosh`) depending on y
 
 ### 2. **Show Available Databases**
 
-shell
 
-CopyEdit
+```d
+show dbs
+```
 
-`show dbs`
 
 ### 3. **Use a Database**
 
 If it doesn’t exist, MongoDB will create it when you insert something:
 
-shell
-
-CopyEdit
 
 `use school`
 
 ### 4. **Show Collections**
 
-shell
-
-CopyEdit
 
 `show collections`
 

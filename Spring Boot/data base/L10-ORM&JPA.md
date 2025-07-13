@@ -47,11 +47,11 @@
 
 JPA is just a set of rules – to use it, you need one of its implementations:
 
-|JPA Provider|Description|
-|---|---|
-|**Hibernate**|Most popular ORM tool|
-|**EclipseLink**|Oracle’s JPA provider|
-|**OpenJPA**|Apache's implementation|
+| JPA Provider    | Description             |
+| --------------- | ----------------------- |
+| **Hibernate**   | Most popular ORM tool   |
+| **EclipseLink** | Oracle’s JPA provider   |
+| **OpenJPA**     | Apache's implementation |
 
 These providers implement JPA so that Java classes can be stored in relational databases (like MySQL).
 
