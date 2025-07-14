@@ -1,7 +1,7 @@
 package net.engineeringdigest.journalApp.Controler;
 
 import net.engineeringdigest.journalApp.Entity.JournalEntry;
-import net.engineeringdigest.journalApp.Entity.UserEntry;
+import net.engineeringdigest.journalApp.Entity.User;
 import net.engineeringdigest.journalApp.service.JournalEntryService;
 import net.engineeringdigest.journalApp.service.UserService;
 import org.bson.types.ObjectId;
@@ -32,7 +32,7 @@ public class JournalEntryControllerV2 {
     // GET all entries of particular user entry
     @GetMapping("/{userName}")
     public ResponseEntity<?> getAllJournalEntriesOfUser(@PathVariable String userName) {
-        UserEntry user = userService.findByUserName(userName);
+        User user = userService.findByUserName(userName);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }

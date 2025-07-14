@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "data base/L15-transactions.md",
+                "file": "Spring security/L16/part5.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "L15-transactions"
+              "title": "part5"
             }
           }
         ]
@@ -170,6 +170,18 @@
   },
   "active": "f1ddb0649a10bf5a",
   "lastOpenFiles": [
+    "Spring security/L16/part4.md",
+    "Spring security/L16/part3.md",
+    "Spring security/L16/Questions.md",
+    "Spring security/L16/part2.md",
+    "Spring security/L16/part1.md",
+    "Spring security/L16/part5.md",
+    "Spring security/L16",
+    "z-images",
+    "z-images/Screenshot (209).png",
+    "z-images/Screenshot (210).png",
+    "data base/L15-transactions.md",
+    "Spring security",
     "data base/L14-Mastering mongo DB relationships in spring boot.md",
     "data base/L13-Lombok.md",
     "data base/L12-ResponseEntity.md",
@@ -188,7 +200,6 @@
     "basic/L2-Creating a Spring Boot Project in IntelliJ using Spring Initializer.md",
     "basic/L3-Maven in Spring Boot.md",
     "basic/l1-Spring Boot Introduction.md",
-    "data base/L15-transactions.md",
     "data base",
     "basic",
     "Welcome.md",
@@ -196,9 +207,6 @@
     "code/journalApp/journalApp/src/test/java/net/engineeringdigest/journalApp",
     "code/journalApp/journalApp/src/test/java/net/engineeringdigest",
     "code/journalApp/journalApp/src/test/java/net",
-    "code/journalApp/journalApp/src/test/java",
-    "code/journalApp/journalApp/src/test",
-    "code/journalApp/journalApp/src/main/resources/templates",
     "code/journalApp/journalApp/HELP.md"
   ]
 }

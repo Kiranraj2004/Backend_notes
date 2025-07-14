@@ -12,13 +12,12 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "users")
 @Data
-public class UserEntry {
+public class User {
 
     @Id
     @JsonSerialize(using = ToStringSerializer.class)
@@ -31,9 +30,8 @@ public class UserEntry {
     @NonNull
     private String password;
 
+    private List<String>roles=new ArrayList<>();
     @DBRef
     private List<JournalEntry>journalEntries=new ArrayList<>();
-    // Getters and Setters
-
 
 }

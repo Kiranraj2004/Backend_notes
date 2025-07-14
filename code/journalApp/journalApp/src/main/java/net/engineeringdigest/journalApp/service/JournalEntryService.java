@@ -3,7 +3,7 @@ package net.engineeringdigest.journalApp.service;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import net.engineeringdigest.journalApp.Entity.JournalEntry;
-import net.engineeringdigest.journalApp.Entity.UserEntry;
+import net.engineeringdigest.journalApp.Entity.User;
 import net.engineeringdigest.journalApp.repository.JournalEntryRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class JournalEntryService {
     public ResponseEntity<?> createEntry(JournalEntry entry,String userName) {
         entry.setCreatedDate(LocalDateTime.now());
         JournalEntry saved = journalEntryRepository.save(entry);
-        UserEntry user = userService.findByUserName(userName);
+        User user = userService.findByUserName(userName);
         if(user==null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user found");
         }
@@ -55,7 +55,7 @@ public class JournalEntryService {
     @Transactional
     public ResponseEntity<?> deleteById(ObjectId id,String userName){
         try{
-            UserEntry user = userService.findByUserName(userName);
+            User user = userService.findByUserName(userName);
             if(user==null){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user found");
             }
