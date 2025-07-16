@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import net.engineeringdigest.journalApp.Entity.JournalEntry;
 import net.engineeringdigest.journalApp.Entity.User;
 import net.engineeringdigest.journalApp.repository.JournalEntryRepository;
+import net.engineeringdigest.journalApp.repository.UserRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,9 @@ public class JournalEntryService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
 
     @Transactional
     public ResponseEntity<?> createEntry(JournalEntry entry,String userName) {
@@ -36,8 +40,8 @@ public class JournalEntryService {
         if(user==null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user found");
         }
-        user.getJournalEntries().add(saved);
-        userService.createEntry(user);
+       user.getJournalEntries().add(saved);
+        userRepository.save(user);
         return ResponseEntity.ok(saved);
     }
 
