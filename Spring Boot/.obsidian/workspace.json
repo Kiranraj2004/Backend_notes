@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Configuration Files/L19 yml files.md",
+                "file": "Logging/L22 part 3.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "L19 yml files"
+              "title": "L22 part 3"
             }
           }
         ]
@@ -170,8 +170,21 @@
   },
   "active": "f1ddb0649a10bf5a",
   "lastOpenFiles": [
-    "Spring security/L18 Role-Based Authorization.md",
+    "Logging/L22 Part 2.md",
+    "Logging/L22 part 1.md",
+    "Logging/L22 part 3.md",
+    "z-images/Screenshot (211).png",
     "Configuration Files/L19 yml files.md",
+    "Logging",
+    "Profiles/L21 Spring profiles.md",
+    "Junit/L19 part 3.md",
+    "Profiles",
+    "Junit/L19 part 2.md",
+    "Junit/L20 Mockito.md",
+    "Junit/L19 part 1.md",
+    "basic/L5-Beans,Ioc ,@component.md",
+    "Junit",
+    "Spring security/L18 Role-Based Authorization.md",
     "Configuration Files",
     "Spring security/L17 authorization in the Journal Controller.md",
     "Spring security/Untitled",
@@ -194,19 +207,7 @@
     "Design Pattern/Controller, Entity, Service, Repository.md",
     "Design Pattern/MVC Pattern.md",
     "data base/L11-integrate MongoDB with a Spring Boot application.md",
-    "data base/L10-ORM&JPA.md",
-    "data base/L9-MongoDb.md",
-    "data base/L8-Restful API.md",
     "Design Pattern",
-    "basic/L6-@Spring Boot Application @ Restcontroller.md",
-    "basic/L7-Dependency Injection.md",
-    "basic/L5-Beans,Ioc ,@component.md",
-    "basic/L4- Spring Boot Project Structure Explained.md",
-    "basic/L2-Creating a Spring Boot Project in IntelliJ using Spring Initializer.md",
-    "basic/L3-Maven in Spring Boot.md",
-    "data base",
-    "basic",
-    "code/journalApp/journalApp/src/test/java/net/engineeringdigest/journalApp/JournalAppApplicationTests.java",
-    "code/journalApp/journalApp/src/test/java/net/engineeringdigest/journalApp"
+    "data base"
   ]
 }

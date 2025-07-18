@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired
@@ -22,7 +21,7 @@ public class AdminController {
     private JournalEntryService journalEntryService;
 
    @GetMapping("/get-all")
-    public ResponseEntity<?>getall() {
+    public ResponseEntity<?>getAll() {
        List<User> users = userService.getAll();
        if (users != null && !users.isEmpty()) {
            return ResponseEntity.ok(users);

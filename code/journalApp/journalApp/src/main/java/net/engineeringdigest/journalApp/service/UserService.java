@@ -108,7 +108,4 @@ public class UserService {
 
         return new ResponseEntity<>("User already has Admin role.", HttpStatus.OK);
     }
-
-
-
 }
