@@ -38,7 +38,7 @@ public class UserService {
            entry.setRoles(Arrays.asList("User"));
            return new ResponseEntity<>(userRespository.save(entry),HttpStatus.CREATED);
        }
-       return new ResponseEntity<>("User Already exist ",HttpStatus.ALREADY_REPORTED);
+       return new ResponseEntity<>("User Already exist use another id ",HttpStatus.BAD_REQUEST);
     }
 
     public ResponseEntity<?> updateUser(User entry){
@@ -82,7 +82,7 @@ public class UserService {
 
         return  userRespository.findAll();
     }
-    @PostMapping("/create-admin")
+
     public ResponseEntity<?> createAdmin(@RequestBody User entry) {
         User user = userRespository.findByUsername(entry.getUsername());
 

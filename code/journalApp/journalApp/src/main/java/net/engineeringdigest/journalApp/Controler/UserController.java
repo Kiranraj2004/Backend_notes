@@ -3,6 +3,7 @@ package net.engineeringdigest.journalApp.Controler;
 
 import net.engineeringdigest.journalApp.Entity.User;
 import net.engineeringdigest.journalApp.service.UserService;
+import net.engineeringdigest.journalApp.service.WeatherServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    WeatherServices weatherServices;
 
     @GetMapping()
     public Optional<User> getById(){
@@ -47,6 +51,16 @@ public class UserController {
         String userName = auth.getName();
         return userService.deleteByName(userName);
     }
+    @GetMapping("/greeting/{city}")
+    public  ResponseEntity<?>greeting(@PathVariable String city){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userName = auth.getName();
+        String greeting = "Hi " + userName + "!";
+        double  weather = weatherServices.getWeather(city);
+        return ResponseEntity.ok(greeting + " feels like Temp :" + weather);
+    }
+
+
 
 
 

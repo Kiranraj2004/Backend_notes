@@ -7,6 +7,8 @@ import net.engineeringdigest.journalApp.Entity.User;
 import net.engineeringdigest.journalApp.repository.JournalEntryRepository;
 import net.engineeringdigest.journalApp.repository.UserRepository;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,8 @@ public class JournalEntryService {
 
     @Autowired
     private UserRepository userRepository;
+
+    private final static Logger logger= LoggerFactory.getLogger(JournalEntryService.class);
 
 
     @Transactional
@@ -69,6 +73,8 @@ public class JournalEntryService {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body("journal Deleted successfully");
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
+            logger.error("error occur when deleting the user ");
+            
             throw new RuntimeException("Transaction failed "+e);
         }
     }
