@@ -1,20 +1,24 @@
 {
   "main": {
-    "id": "9dd0faccbf2fc8bb",
+    "id": "1a8e95fdd3b61568",
     "type": "split",
     "children": [
       {
-        "id": "a81c9be99b3bd000",
+        "id": "66c6a04c0e452eed",
         "type": "tabs",
         "children": [
           {
-            "id": "e94ae869c2564dbb",
+            "id": "36cef1365c2f199f",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Redis cloud/part 1.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "part 1"
             }
           }
         ]
@@ -23,15 +27,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "f65bac7acf8f0e4d",
+    "id": "553feb2fafe28fda",
     "type": "split",
     "children": [
       {
-        "id": "c256964b70dd4644",
+        "id": "2477931f1bc63daa",
         "type": "tabs",
         "children": [
           {
-            "id": "eae49c3e48474b67",
+            "id": "edcb2c4238a0fe42",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -44,7 +48,7 @@
             }
           },
           {
-            "id": "ccad3f8075e3f2b1",
+            "id": "e66d213cd89ea349",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -61,7 +65,7 @@
             }
           },
           {
-            "id": "175f55a8b237bdcb",
+            "id": "e709a74b33caee47",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -77,19 +81,20 @@
     "width": 300
   },
   "right": {
-    "id": "e7a326789c91adb1",
+    "id": "1a62d8d5deb74aac",
     "type": "split",
     "children": [
       {
-        "id": "8011227c47669246",
+        "id": "e9b43b665238b430",
         "type": "tabs",
         "children": [
           {
-            "id": "e87997cf24c0604e",
+            "id": "a251019a965f5769",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Basic/L1 Part1.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,25 +104,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks"
+              "title": "Backlinks for L1 Part1"
             }
           },
           {
-            "id": "d7d9fd9a17dcc07d",
+            "id": "813774b3e5a94cf5",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Welcome.md",
+                "file": "Basic/L1 Part1.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Welcome"
+              "title": "Outgoing links from L1 Part1"
             }
           },
           {
-            "id": "2ed27fb54f74c45c",
+            "id": "540243eeab930d66",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -132,25 +137,26 @@
             }
           },
           {
-            "id": "6f4da7a4354e1a64",
+            "id": "ca55e212f1082c68",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
+                "file": "Basic/L1 Part1.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of L1 Part1"
             }
           }
-        ],
-        "currentTab": 3
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -162,46 +168,15 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "6f4da7a4354e1a64",
+  "active": "36cef1365c2f199f",
   "lastOpenFiles": [
-    "Untitled",
-    "Untitled.md",
-    "Logging/L22 part 3.md",
-    "Sending email/Spring Boot using JavaMailSender with Gmail.md",
-    "Anotations/@Service.md",
-    "Anotations/@PostConstruct.md",
-    "External Api Inegration/Part 1.md",
-    "Custom mongo db queries/MongoTemplate,Criteria,.md",
-    "Sending email/Crons or @Scheduler.md",
-    "Sending email",
-    "External tools",
-    "Custom mongo db queries",
-    "data base/L8-Restful API.md",
-    "basic/L7-Dependency Injection.md",
-    "basic/L6-@Spring Boot Application @ Restcontroller.md",
-    "basic/L5-Beans,Ioc ,@component.md",
-    "basic/L4- Spring Boot Project Structure Explained.md",
-    "basic/L3-Maven in Spring Boot.md",
-    "basic/L2-Creating a Spring Boot Project in IntelliJ using Spring Initializer.md",
-    "basic/l1-Spring Boot Introduction.md",
-    "Anotations/@Value.md",
-    "Anotations",
-    "External Api Inegration/Part 2.md",
-    "External Api Inegration/Untitled",
-    "External Api Inegration",
-    "Logging/L22 Part 2.md",
-    "Logging/L22 part 1.md",
-    "Profiles/L21 Spring profiles.md",
-    "Junit/L19 part 1.md",
-    "External tools/L23 Sonar code quality tools.md",
-    "z-images/Screenshot (211).png",
-    "Configuration Files/L19 yml files.md",
-    "Logging",
-    "Junit/L19 part 3.md",
-    "Profiles",
-    "Junit",
-    "Configuration Files",
-    "z-images/Screenshot (209).png",
-    "z-images/Screenshot (210).png"
+    "Redis local/Part 3.md",
+    "Redis cloud/part 1.md",
+    "Redis cloud",
+    "Redis local/Part 4.md",
+    "Redis local/part 2.md",
+    "Redis local/L1 Part1.md",
+    "Welcome.md",
+    "Redis local"
   ]
 }
