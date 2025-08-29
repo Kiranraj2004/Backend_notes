@@ -11,13 +11,32 @@
             "id": "7013a72563c0776c",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Kafka/Part 1 definition.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Part 1 definition"
+            }
+          },
+          {
+            "id": "945a3ca4b592283b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Docker/part 4 docker setup and Commands.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "part 4 docker setup and Commands"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -49,7 +68,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#Question",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -156,6 +175,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:Create new base": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
@@ -164,8 +184,14 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "7013a72563c0776c",
+  "active": "945a3ca4b592283b",
   "lastOpenFiles": [
+    "Docker/part 3 Docker and containerization.md",
+    "Docker/part 4 docker setup and Commands.md",
+    "Docker/part 2 Containerization.md",
+    "Docker/part 1 Why Docker _Virtualization.md",
+    "Docker",
+    "Kafka/Part 1 definition.md",
     "Redis cloud/part 1.md",
     "Redis local/Part 3.md",
     "Redis cloud",
