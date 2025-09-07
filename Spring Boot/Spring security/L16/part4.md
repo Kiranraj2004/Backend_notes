@@ -198,3 +198,222 @@ public ResponseEntity<User> saveNewUser(@RequestBody User user) {
 
 ---
 
+
+
+## how to configure authentication in version 6.5 security
+
+Got it 👍 let’s debug carefully.  
+Since you’re migrating from `configure(AuthenticationManagerBuilder auth)` to Spring Security 6.5+, the **most common errors** are:
+
+1. **`No qualifying bean of type 'AuthenticationManager' available`**  
+    → You must explicitly declare it as a `@Bean`.
+    
+2. **Password mismatch (`Bad credentials`)**  
+    → Because the password in DB is not encoded with `BCryptPasswordEncoder`.
+    
+3. **Role mismatch (`AccessDeniedException`)**  
+    → Because Spring expects `ROLE_USER` instead of just `USER`.
+    
+
+---
+
+Here’s the **clean working version** (minimal setup with MongoDB, Spring Security 6.5+):
+
+### 🔹 `UserDetailsService`
+
+```java
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
+
+    private final UserRepository userRepository;
+
+    public CustomUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        AppUser user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getUsername())
+                .password(user.getPassword()) // must already be BCrypt encoded
+                .authorities(user.getRoles().stream()
+                        .map(role -> role.startsWith("ROLE_") ? role : "ROLE_" + role) // normalize roles
+                        .map(SimpleGrantedAuthority::new)
+                        .toList())
+                .build();
+    }
+}
+```
+
+---
+
+### 🔹 `SecurityConfig`
+
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    private final CustomUserDetailsService customUserDetailsService;
+
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
+        this.customUserDetailsService = customUserDetailsService;
+    }
+
+    // ✅ Security rules
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/user/**").hasRole("USER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .httpBasic(Customizer.withDefaults()); // Basic Auth
+        return http.build();
+    }
+
+    // ✅ AuthenticationManager bean (replacement for configure(AuthenticationManagerBuilder))
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(customUserDetailsService)
+                .passwordEncoder(passwordEncoder())
+                .and()
+                .build();
+    }
+
+    // ✅ Password encoder
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
+```
+
+---
+
+### 🔹 Register User Correctly
+
+When inserting into MongoDB, always encode the password:
+
+```java
+AppUser user = new AppUser();
+user.setUsername("john");
+user.setPassword(passwordEncoder.encode("password123")); // must be encoded
+user.setRoles(Set.of("USER")); // will automatically become ROLE_USER
+userRepository.save(user);
+```
+
+---
+
+✅ With this setup:
+
+- `/public/**` is open
+    
+- `/user/**` requires `ROLE_USER`
+    
+- `/admin/**` requires `ROLE_ADMIN`
+    
+- All other requests require authentication
+    
+
+---
+
+👉 Can you paste the **exact error message** you’re getting?  
+That way I can pinpoint whether it’s a **bean definition issue**, **password encoding**, or **role mismatch**.
+
+
+
+
+
+
+##  Q1 )in modern  version you can't use and()
+
+Ah, yes 👍 you’re absolutely right.  
+Starting with **Spring Security 6.1**, the old `.and()` chaining style is **deprecated** and will be removed.
+
+That’s why you’re seeing the warning on:
+
+```java
+http.getSharedObject(AuthenticationManagerBuilder.class)
+    .userDetailsService(customUserDetailsService)
+    .passwordEncoder(passwordEncoder())
+    .and()   // 🚨 deprecated
+    .build();
+```
+
+---
+
+### ✅ The modern way (Spring Security 6.1+)
+
+Instead of chaining with `.and()`, you configure the `AuthenticationManagerBuilder` directly:
+
+```java
+@Bean
+public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+    AuthenticationManagerBuilder authBuilder =
+            http.getSharedObject(AuthenticationManagerBuilder.class);
+
+    authBuilder
+            .userDetailsService(customUserDetailsService)
+            .passwordEncoder(passwordEncoder());
+
+    return authBuilder.build(); // no .and()
+}
+```
+
+---
+
+### Full Updated Config (Clean)
+
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    private final CustomUserDetailsService customUserDetailsService;
+
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService) {
+        this.customUserDetailsService = customUserDetailsService;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/user/**").hasRole("USER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .httpBasic(Customizer.withDefaults());
+        return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authBuilder =
+                http.getSharedObject(AuthenticationManagerBuilder.class);
+
+        authBuilder
+                .userDetailsService(customUserDetailsService)
+                .passwordEncoder(passwordEncoder());
+
+        return authBuilder.build(); // ✅ no .and()
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}
+```
+
+---

@@ -11,10 +11,14 @@
             "id": "e94ae869c2564dbb",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Spring security/L18 Role-Based Authorization.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "L18 Role-Based Authorization"
             }
           }
         ]
@@ -137,12 +141,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "Spring security/L18 Role-Based Authorization.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of L18 Role-Based Authorization"
             }
           }
         ],
@@ -163,8 +168,26 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "6f4da7a4354e1a64",
+  "active": "e94ae869c2564dbb",
   "lastOpenFiles": [
+    "Spring security/L17 authorization in the Journal Controller.md",
+    "Spring security/L16/part4.md",
+    "Spring security/L16/part5.md",
+    "Spring security/L16/part3.md",
+    "Spring security/L16/part2.md",
+    "Spring security/L16/part1.md",
+    "basic/L6-@Spring Boot Application @ Restcontroller.md",
+    "basic/L5-Beans,Ioc ,@component.md",
+    "basic/L4- Spring Boot Project Structure Explained.md",
+    "basic/L3-Maven in Spring Boot.md",
+    "basic/L2-Creating a Spring Boot Project in IntelliJ using Spring Initializer.md",
+    "basic/l1-Spring Boot Introduction.md",
+    "data base/L14-Mastering mongo DB relationships in spring boot.md",
+    "data base/L11a-Optional return type.md",
+    "data base/L12-ResponseEntity.md",
+    "data base/L11-integrate MongoDB with a Spring Boot application.md",
+    "data base/L10-ORM&JPA.md",
+    "data base/L9-MongoDb.md",
     "Untitled",
     "Untitled.md",
     "Logging/L22 part 3.md",
@@ -177,31 +200,13 @@
     "Sending email",
     "External tools",
     "Custom mongo db queries",
-    "data base/L8-Restful API.md",
-    "basic/L7-Dependency Injection.md",
-    "basic/L6-@Spring Boot Application @ Restcontroller.md",
-    "basic/L5-Beans,Ioc ,@component.md",
-    "basic/L4- Spring Boot Project Structure Explained.md",
-    "basic/L3-Maven in Spring Boot.md",
-    "basic/L2-Creating a Spring Boot Project in IntelliJ using Spring Initializer.md",
-    "basic/l1-Spring Boot Introduction.md",
-    "Anotations/@Value.md",
     "Anotations",
-    "External Api Inegration/Part 2.md",
     "External Api Inegration/Untitled",
     "External Api Inegration",
-    "Logging/L22 Part 2.md",
-    "Logging/L22 part 1.md",
-    "Profiles/L21 Spring profiles.md",
-    "Junit/L19 part 1.md",
-    "External tools/L23 Sonar code quality tools.md",
     "z-images/Screenshot (211).png",
-    "Configuration Files/L19 yml files.md",
     "Logging",
-    "Junit/L19 part 3.md",
     "Profiles",
     "Junit",
-    "Configuration Files",
     "z-images/Screenshot (209).png",
     "z-images/Screenshot (210).png"
   ]
