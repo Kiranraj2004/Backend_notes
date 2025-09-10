@@ -186,3 +186,142 @@ Let me know if you'd like detailed code examples for:
 - Security configuration class
     
 - Role-based access to endpoints using `@PreAuthorize` or `.hasRole("USER")` style restrictions
+
+
+
+# flow  of spring security
+
+
+## 🔹 Step-by-Step Flow
+
+### 1. **Request comes in**
+
+- The user hits an endpoint, e.g. `/user/profile`.
+    
+- Your `SecurityFilterChain` checks the request:
+    
+
+```java
+.authorizeHttpRequests(auth -> auth
+    .requestMatchers("/public/**").permitAll()   // ✅ skip security
+    .requestMatchers("/user/**").hasRole("User") // ✅ must be authenticated + have role
+    .requestMatchers("/admin/**").hasRole("Admin")
+    .anyRequest().authenticated()
+)
+```
+
+👉 If `/public/**`, it goes **straight to controller**.  
+👉 Otherwise, Spring says: “This needs authentication.”
+
+---
+
+### 2. **Authentication process starts**
+
+- Since you enabled `.httpBasic()`, the client must send credentials (`username`, `password`) in the **Authorization header**:
+    
+
+```
+Authorization: Basic base64(username:password)
+```
+
+- Spring extracts those credentials and creates a **`UsernamePasswordAuthenticationToken`** with them.
+    
+
+---
+
+### 3. **AuthenticationManager kicks in**
+
+Your bean:
+
+```java
+@Bean
+public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+    AuthenticationManagerBuilder authBuilder =
+            http.getSharedObject(AuthenticationManagerBuilder.class);
+
+    authBuilder
+            .userDetailsService(customUserDetailsService)
+            .passwordEncoder(passwordEncoder());
+
+    return authBuilder.build();
+}
+```
+
+- This tells Spring:  
+    “When you authenticate, use `customUserDetailsService` to load users and `BCryptPasswordEncoder` to check passwords.”
+    
+
+---
+
+### 4. **CustomUserDetailsService is called**
+
+Spring passes the username into your method:
+
+```java
+@Override
+public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    User user = userRepository.findByUsername(username); // 🔍 DB lookup
+    if(user == null) throw new UsernameNotFoundException("User not found");
+
+    return org.springframework.security.core.userdetails.User.builder()
+            .username(user.getUsername())
+            .password(user.getPassword())   // (already hashed in DB)
+            .roles(user.getRoles().toArray(new String[0]))
+            .build();
+}
+```
+
+👉 This does **not yet verify the password**.  
+It only **loads the user** and returns a `UserDetails` object with username, encoded password, and roles.
+
+---
+
+### 5. **Password verification**
+
+- Spring Security takes the raw password from the login attempt.
+    
+- It calls your configured `PasswordEncoder` (`BCryptPasswordEncoder`) to check if:
+    
+
+```
+matches(rawPasswordFromRequest, encodedPasswordFromDB)
+```
+
+👉 If it matches → authentication success.  
+👉 If not → `BadCredentialsException`.
+
+---
+
+### 6. **SecurityContext is updated**
+
+On success:
+
+- Spring creates a new **`Authentication` object** (with username, authorities, etc.)
+    
+- It stores it inside `SecurityContextHolder`.
+    
+
+Now, anywhere in your app, you can access the current user:
+
+```java
+Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+String username = auth.getName();                  // logged-in username
+Collection<? extends GrantedAuthority> roles = auth.getAuthorities(); // roles
+```
+
+---
+
+## 🔹 Your Understanding (checked ✅)
+
+- ✅ Public endpoints skip authentication → directly hit controller
+    
+- ✅ Other endpoints → Spring calls `AuthenticationManager`
+    
+- ✅ `AuthenticationManager` uses `UserDetailsService` to fetch user by username
+    
+- ✅ Password is verified by Spring (using your `PasswordEncoder`)
+    
+- ✅ On success → user details are stored in `SecurityContext`
+    
+
+So your mental model is correct ✔️.
